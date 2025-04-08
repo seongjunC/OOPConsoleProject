@@ -55,8 +55,7 @@ namespace OOPConsoleProject
                 }
             }
 
-
-
+            SetMap();
         } 
 
 
@@ -67,7 +66,7 @@ namespace OOPConsoleProject
             string[] mapData_1 = new string[] {
                 "########",
                 "#      #",
-                "#      M",
+                "#      2",
                 "#   ## #",
                 "#   #  #",
                 "########"
@@ -76,7 +75,7 @@ namespace OOPConsoleProject
             string[] mapData_2 = new string[] {
                 "########",
                 "#      #",
-                "#      M",
+                "1      3",
                 "#   ## #",
                 "#   #  #",
                 "########"
@@ -85,7 +84,7 @@ namespace OOPConsoleProject
             string[] mapData_3 = new string[] {
                 "########",
                 "#      #",
-                "#      M",
+                "2      #",
                 "#   ## #",
                 "#   #  #",
                 "########"
@@ -119,6 +118,11 @@ namespace OOPConsoleProject
                 }
                 Console.WriteLine();
             }
+        }
+
+        public void SetMap()
+        {
+            Game.Player.map = map;
         }
 
 

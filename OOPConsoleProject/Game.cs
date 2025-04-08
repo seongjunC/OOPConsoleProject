@@ -18,7 +18,9 @@ namespace OOPConsoleProject
         private static Stack<string> SceneStack = new Stack<string>();
         // 씬 전환에 사용할 수 있도록 딕셔너리에 씬들을 보관한다.
         private static Dictionary<string, BaseScene> sceneDic = new Dictionary<string, BaseScene>();
-
+        // 플레이어 객체를 생성한다.
+        private static Player player;
+        public static Player Player { get { return player; } } 
 
 
         public static void Run()
@@ -64,6 +66,7 @@ namespace OOPConsoleProject
             Console.CursorVisible = false;
 
             gameOver = false;
+            Player player = new Player();
 
             // 각 Scene에서 해당 씬의 이름과 씬을 딕셔너리에 넣는다.
             // 씬을 추가로 구현할 때마다 추가해 줘야한다. 

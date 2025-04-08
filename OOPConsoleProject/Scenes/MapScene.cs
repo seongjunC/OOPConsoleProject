@@ -9,11 +9,17 @@ namespace OOPConsoleProject.Scenes
     public class MapScene : BaseScene
     {
         public static int MapNumber = 1;
-        public Map map;
+        public Map field;
+
+        protected string[] mapData;
+        protected bool[,] map;
+
+
         public override void Render()
         {
-            map.Print();
+            field.Print();
 
+            Game.Player.Print();
         }
 
 
@@ -41,7 +47,7 @@ namespace OOPConsoleProject.Scenes
         {
             MapFactory mapFact = new MapFactory();
 
-            map = mapFact.Create(MapNumber);
+            field = mapFact.Create(MapNumber);
         }
     }
 }
