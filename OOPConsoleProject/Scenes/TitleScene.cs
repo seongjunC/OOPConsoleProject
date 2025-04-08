@@ -18,20 +18,24 @@ namespace OOPConsoleProject.Scenes
             Console.WriteLine("\n\n    아무키나 눌러 게임 시작하기     ");
             Console.WriteLine("");
         }
+
         public override void Input()
         {
             Console.ReadKey(true);
         }
+
         public override void Update()
         {
             
         }
 
+       
         public override void Result()
         {
             Game.ChangeScene("map");
         }
 
+        // Game의 딕셔너리에 title을 등록한다.
         public override void SceneDic()
         {
             Game.InsertDic("title", this);

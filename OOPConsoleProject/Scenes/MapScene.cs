@@ -9,33 +9,39 @@ namespace OOPConsoleProject.Scenes
     public class MapScene : BaseScene
     {
         public static int MapNumber = 1;
+        public Map map;
         public override void Render()
         {
-            MapFactory map = new MapFactory();
+            map.Print();
 
-            map.Create(MapNumber);
         }
 
 
         public override void Input()
         {
-            throw new NotImplementedException();
+
         }
 
 
         public override void Result()
         {
-            throw new NotImplementedException();
+            Game.gameOver = true;
         }
 
         public override void SceneDic()
         {
-            throw new NotImplementedException();
+            Game.InsertDic("map", this);
         }
 
         public override void Update()
         {
-            throw new NotImplementedException();
+        }
+
+        public override void Enter()
+        {
+            MapFactory mapFact = new MapFactory();
+
+            map = mapFact.Create(MapNumber);
         }
     }
 }
