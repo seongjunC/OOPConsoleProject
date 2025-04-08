@@ -29,7 +29,7 @@ namespace OOPConsoleProject.Scenes
 
         public override void Result()
         {
-            Game.ChangeScene("main");
+            Game.ChangeScene("map");
         }
 
         public override void SceneDic()

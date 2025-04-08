@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace OOPConsoleProject.Scenes
 {
-    public class MapScene : BaseScene
+    public class BattleScene : BaseScene
     {
-        public static int MapNumber = 1;
+
         public override void Render()
         {
-            MapFactory map = new MapFactory();
-
-            map.Create(MapNumber);
+            
         }
-
 
         public override void Input()
         {

@@ -54,7 +54,7 @@ namespace OOPConsoleProject
 
             new TitleScene().SceneDic();
 
-
+            curScene = sceneDic["title"];
         }
 
         private static void End()

@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace OOPConsoleProject.Scenes
 {
-    public class MapScene : BaseScene
+    public class MainScene : BaseScene
     {
-        public static int MapNumber = 1;
         public override void Render()
         {
-            MapFactory map = new MapFactory();
-
-            map.Create(MapNumber);
+            throw new NotImplementedException();
         }
-
 
         public override void Input()
         {
             throw new NotImplementedException();
         }
+
 
 
         public override void Result()
