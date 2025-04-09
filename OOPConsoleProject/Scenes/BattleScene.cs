@@ -10,11 +10,29 @@ namespace OOPConsoleProject.Scenes
     {
         bool IsFirst;
         bool IsBattleEnd;
+        Monster monster;
+        int monNowHp;
+        int playerNowHp;
+        Player player = Game.Player;
 
         public BattleScene()
         {
             IsFirst = true;
             IsBattleEnd = false;
+            List<MonsterBuilder> BuilderList = new List<MonsterBuilder>(); 
+
+            MonsterBuilder orangeMushroomBuilder = new MonsterBuilder();
+            orangeMushroomBuilder
+                .SetName("주황버섯")
+                .SetGold(100)
+                .SetEXP(100)
+                .SetStat(new Stat(100, 5, 5, 10, 7));
+
+
+
+
+            BuilderList.Add( orangeMushroomBuilder );
+
         }
 
         // TODO : 몬스터 구현 
@@ -22,6 +40,8 @@ namespace OOPConsoleProject.Scenes
         {
             Console.SetCursorPosition(0, Console.WindowWidth / 2);
             Console.WriteLine("몬스터 미 구현");
+            Console.WriteLine("{0} / {1} : 몬스터의 체력", monNowHp, monster.Stat.Hp);
+            Console.WriteLine("{0} / {1} : 플레이어의 체력", playerNowHp, player.Stat.Hp);
         }
 
         public override void Input()
@@ -51,6 +71,13 @@ namespace OOPConsoleProject.Scenes
         public override void Update()
         {
 
+        }
+
+        public override void Enter()
+        {
+
+            monNowHp = monster.Stat.Hp;
+            playerNowHp = player.Stat.Hp;
         }
 
         public override void SceneDic()

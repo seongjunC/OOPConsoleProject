@@ -53,7 +53,6 @@ namespace OOPConsoleProject
             LevelManager += StatPointUse;
         }
 
-
         public void Print()
         {
             Console.SetCursorPosition(position.x, position.y);
@@ -89,6 +88,16 @@ namespace OOPConsoleProject
             {
                 LevelManager();
             }
+        }
+
+        public void GetGold(int _gold)
+        {
+            gold += _gold;
+        }
+
+        public void LostGold(int _gold)
+        {
+            gold -= _gold;
         }
 
         // level이 올랐을 때 실행하는 함수

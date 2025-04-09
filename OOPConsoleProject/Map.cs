@@ -12,6 +12,7 @@ namespace OOPConsoleProject
         private static List<string[]> MapList = new List<string[]>();
         public static List<string[]> mapList { get => MapList; }
         private int thismap; 
+        
 
         // bool[,] 변수로 이동 가능 여부를 체크한다.
         public bool[,] map;
