@@ -48,6 +48,16 @@ namespace OOPConsoleProject.Scenes
             MapFactory mapFact = new MapFactory();
 
             field = mapFact.Create(MapNumber);
+
+            
+        }
+
+        public override void Exit()
+        {
+            if(field.Ismoving(ref MapNumber,out MapNumber))
+            {
+
+            }
         }
     }
 }

@@ -16,7 +16,8 @@ namespace OOPConsoleProject
         // bool[,] 변수로 이동 가능 여부를 체크한다.
         public bool[,] map;
         // 만약 맵에 다른 지점으로 이동가능한 포인트가 있다면 해당 위치를 저장한다.
-        public List<int[]> movingPoint;
+        public List<int[]> movingPoint = new List<int[]>();
+        public Player player = Game.Player;
 
         public Map(int MapNumber)
         {
@@ -50,12 +51,13 @@ namespace OOPConsoleProject
                     // 해당 값을 movingPoint 리스트에 저장한다.
                     if (int.TryParse(mapdetail[y][x].ToString(), out int SceneNum))
                     {
-                        movingPoint.Add(new int[3] { y,x,SceneNum});
+                        movingPoint.Add(new int[4] {MapNumber, x,y,SceneNum});
                     }
                 }
             }
 
-            SetMap();
+            // 만들어진 맵을 플레이어에게 전달한다.
+            SetMap(map);
         } 
 
 
@@ -118,13 +120,47 @@ namespace OOPConsoleProject
                 }
                 Console.WriteLine();
             }
+            player.Print();
         }
 
-        public void SetMap()
+        //플레이어의 맵을 현재 맵으로 세팅한다.
+        public void SetMap(bool[,] map)
         {
-            Game.Player.map = map;
+            player.map = map;
         }
 
+        // 플레이어의 현재 위치가 다른 포인트로의 이동 지점인지 판단한다.
+        // 현재 맵 번호를 받고 다음 맵 번호를 전달한다.
+        public bool Ismoving(ref int MapNumber, out int SceneNum)
+        {
+            foreach (int[] moving in movingPoint)
+            {
+                // 만약 현재 맵의 이동 지점인 경우
+                if (moving[0] == MapNumber)
+                {
+                    // 플레이어의 위치가 해당 이동 지점의 x,y  값인 경우
+                    if(player.position == new Vector2(moving[1], moving[2]))
+                    {
+                        foreach (int[] moved in movingPoint)
+                        {
+                            // 다시 이동 지점들의 좌표를 순회하여
+                            // 이동할 맵 번호가 해당 맵이며
+                            // //
+                            if(moved[0] == moving[3] && moved[3] == moving[0])
+                            {
+                                MapNumber = moved[0];
+                                player.position = new Vector2(moved[1], moved[2]);
+                                SceneNum = MapNumber;
+                                return true;
+                            }
+                        }
+                        Console.WriteLine("에러: 이동할 맵을 찾지 못했음");
+                    }
+                }
+            }
+            SceneNum = MapNumber;
+            return false;
+        }
 
 
     }
