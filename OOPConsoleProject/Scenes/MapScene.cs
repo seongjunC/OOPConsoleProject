@@ -11,7 +11,17 @@ namespace OOPConsoleProject.Scenes
         public static int MapNumber = 1;
         public Map field;
         private ConsoleKey input;
+        private Random random = new Random();
+        private bool IsBattle;
+        private int monsterRate;
 
+        public MapScene()
+        {
+            MapFactory mapFact = new MapFactory();
+
+            field = mapFact.Create(MapNumber);
+            monsterRate = 0;
+        }
 
         public override void Render()
         {
@@ -27,6 +37,7 @@ namespace OOPConsoleProject.Scenes
 
         public override void Result()
         {
+            if (IsBattle) Game.ChangeScene("Battle");
         }
 
         public override void SceneDic()
@@ -38,13 +49,21 @@ namespace OOPConsoleProject.Scenes
         {
             Game.Player.Action(input);
             field.Moving(ref MapNumber);
+            if (random.Next(0, 100) < monsterRate)
+            {
+                IsBattle = true;
+                monsterRate = 0;
+            }
+            else 
+            { 
+                IsBattle = false; 
+                monsterRate += 1;
+            }
+
         }
 
         public override void Enter()
         {
-            MapFactory mapFact = new MapFactory();
-
-            field = mapFact.Create(MapNumber);
         }
 
         public override void Exit()

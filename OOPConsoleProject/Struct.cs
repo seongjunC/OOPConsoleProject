@@ -30,6 +30,7 @@ namespace OOPConsoleProject
             LUC = _luc;
         }
 
+        //플레이어의 스탯을 보여준다.
         public void PrintStat()
         {
             Console.WriteLine("HP  : {0}", Hp);
@@ -39,6 +40,11 @@ namespace OOPConsoleProject
             Console.WriteLine("LUC : {0}", Luc);
         }
 
+
+        // player 객체의 statPointUse로 부터 접근
+        // 받아온 스탯 값을 해당 종류의 스탯을 올린다.
+        // 한번에 한 종류의 스탯만 받아올 수 있다.
+        // 만약 해당 스탯이 없다면 오류를 출력한다.
         public void StatUp(int statPoint, ConsoleKey stat)
         {
             switch (stat)

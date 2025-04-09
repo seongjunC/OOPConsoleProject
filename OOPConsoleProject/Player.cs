@@ -116,6 +116,7 @@ namespace OOPConsoleProject
             return;
         }
 
+
         // StatPoint를 사용해서 스탯을 올린다.
         // 현재는 levelManager를 통해서 level이 오르면 자동 실행되지만
         // TODO : 옵션 메뉴를 만들어서 스탯창을 연다든지 설정을 통해 

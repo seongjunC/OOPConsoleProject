@@ -22,13 +22,15 @@ namespace OOPConsoleProject
 
         public Map(int MapNumber)
         {
-            // mapList에 맵이 생성이 안된 경우에 초기화를 진행한다.
+            // 맵 인스턴스가 생성될 때의 초기화를 진행
             if (mapList.Count == 0)
             {
                 Init();
             }
 
+            // 맵 번호가 바뀔 때 진행하는 초기화를 진행한다.
             MapInit(MapNumber);
+
         } 
 
         public void MapInit(int MapNumber)
@@ -63,8 +65,7 @@ namespace OOPConsoleProject
         }
 
 
-        // 맵 초기화
-        // maplist는 스태틱 변수이므로 맵이 처음 실행될 때만 수행된다.
+        // 맵 인스턴스가 생성될 때의 초기화
         public void Init() {
 
             string[] mapData_1 = new string[] {
@@ -98,9 +99,11 @@ namespace OOPConsoleProject
             MapList.Add(mapData_2);
             MapList.Add(mapData_3);
 
+            // MapList에 있는 이동 지점들을 찾는다.
             int dataNum = 1;
             foreach (string[] mapData in MapList)
             {
+                // 맵의 가로와 세로축 지정
                 int verticalMap = mapData.Length;
                 int horizontalMap = mapData[0].Length;
 
@@ -108,6 +111,8 @@ namespace OOPConsoleProject
                 {
                     for (int x = 0; x < horizontalMap; x++)
                     {
+                        // 만약 mapData[y][x]가 숫자라면 해당 지점의 숫자를 받아
+                        // 현재 위치, x좌표, y좌표, 목적지 순으로 movingPoint에 넣는다.
                         if (int.TryParse(mapData[y][x].ToString(), out int SceneNum))
                         {
                             movingPoint.Add(new int[4] { dataNum, x, y, SceneNum });
@@ -146,14 +151,17 @@ namespace OOPConsoleProject
             {
                 for (int x = 0; x < map.GetLength(1); x++)
                 {
-                    // 맵의 값이 true면 공백을 출력한다.
+                    // 맵의 값이 true면 아래를 진행한다.
                     if (map[y,x] == true)
                     {
+                        // 위에서 moveVec에 저장한 값중 현재의 좌표가 있는지 확인한다.
                         int to = moveVec.IndexOf(new Vector2(x, y));
+                        // 없다면 공백을 출력한다.
                         if ( to == -1)
                         {
                             Console.Write(' ');
                         }
+                        // 있다면 moveTo에 저장된 해당 인덱스의 값을 출력한다.
                         else
                         {
                             Console.Write(moveTo[to]);

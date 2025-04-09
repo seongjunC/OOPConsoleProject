@@ -72,6 +72,7 @@ namespace OOPConsoleProject
             // 씬을 추가로 구현할 때마다 추가해 줘야한다. 
             new TitleScene().SceneDic();
             new MapScene().SceneDic();
+            new BattleScene().SceneDic();
 
             // 시작할 땐 먼저 title씬이 표시되도록 curScene에 넣는다.
             curScene = sceneDic["title"];
