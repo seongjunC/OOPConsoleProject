@@ -134,6 +134,7 @@ namespace OOPConsoleProject
                 ConsoleKey statName = Console.ReadKey(true).Key;
                 //  6번 키를 누르면 statPoint 사용을 중지한다.
                 if (statName == ConsoleKey.D6) break;
+
                 Console.WriteLine("스탯 포인트를 얼마나 올리시겠습니까?");
                 Console.WriteLine("현재의 스탯 포인트 : {0}", statPoint);
 

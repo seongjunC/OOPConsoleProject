@@ -10,6 +10,8 @@ namespace OOPConsoleProject.Scenes
     {
         public static int MapNumber = 1;
         public Map field;
+        private ConsoleKey input;
+
 
         public override void Render()
         {
@@ -19,13 +21,12 @@ namespace OOPConsoleProject.Scenes
 
         public override void Input()
         {
-
+            input = Console.ReadKey(true).Key;
         }
 
 
         public override void Result()
         {
-            Game.gameOver = true;
         }
 
         public override void SceneDic()
@@ -35,7 +36,8 @@ namespace OOPConsoleProject.Scenes
 
         public override void Update()
         {
-
+            Game.Player.Action(input);
+            field.Moving(ref MapNumber);
         }
 
         public override void Enter()
