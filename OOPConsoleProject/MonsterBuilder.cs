@@ -32,6 +32,7 @@ namespace OOPConsoleProject
         public MonsterBuilder SetLevel(int _level)
         {
             this.level = _level;
+            this.stat = (stat * level);
             return this;
         }
         
@@ -55,7 +56,10 @@ namespace OOPConsoleProject
 
         public MonsterBuilder SetArt(string monsterName) 
         {
-            this.art = monsterASCII.monsterDict[monsterName];
+            try { this.art = monsterASCII.monsterDict[monsterName];
+            }
+            catch { this.art = new string[] { };
+            }
             return this;
         }
 

@@ -19,6 +19,7 @@ namespace OOPConsoleProject
         public int Exp { get => EXP; }
 
         private string[] art;
+        public string[] Art { get { return art; } }
 
         private Stat stat;
         public Stat Stat { get { return stat; } }

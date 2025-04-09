@@ -33,7 +33,7 @@ namespace OOPConsoleProject
 
         public Player() {
             // 플레이어의 스탯의 초기 값 설정
-            stat = new Stat(100, 10, 10, 10, 10);
+            stat = new Stat(100, 10, 10, 5, 5);
             // 초기 레벨은 1
             level = 1;
             // 추후 레벨업시 스탯을 올리기위해 필요한 포인트, 초기 값은 0 

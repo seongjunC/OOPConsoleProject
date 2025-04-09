@@ -50,13 +50,13 @@ namespace OOPConsoleProject
             switch (stat)
             {
                 case ConsoleKey.D1:
-                    HP += statPoint*10;
+                    HP += statPoint * 10;
                     break;
                 case ConsoleKey.D2:
-                    ATK += statPoint*5;
+                    ATK += statPoint * 5;
                     break;
                 case ConsoleKey.D3:
-                    DEF += statPoint*5;
+                    DEF += statPoint * 5;
                     break;
                 case ConsoleKey.D4:
                     AGI += statPoint;
@@ -68,6 +68,14 @@ namespace OOPConsoleProject
                     Console.WriteLine("잘못된 입력입니다 올릴 스탯을 골라주세요");
                     break;
             }
+        }
+
+        public static Stat operator *(Stat stat, int _level)
+        {
+            stat.HP = (int)(stat.Hp * (1+_level *0.3));
+            stat.ATK = (int)(stat.ATK * (1 + _level * 0.3));
+            stat.DEF = (int)(stat.DEF * (1 + _level * 0.3));
+            return stat;
         }
 
     }
