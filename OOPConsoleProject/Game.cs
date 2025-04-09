@@ -66,7 +66,7 @@ namespace OOPConsoleProject
             Console.CursorVisible = false;
 
             gameOver = false;
-            Player player = new Player();
+            player = new Player();
 
             // 각 Scene에서 해당 씬의 이름과 씬을 딕셔너리에 넣는다.
             // 씬을 추가로 구현할 때마다 추가해 줘야한다. 
@@ -81,7 +81,8 @@ namespace OOPConsoleProject
         // 게임의 마무리를 진행한다.
         private static void End()
         {
-
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
         }
     }
 }

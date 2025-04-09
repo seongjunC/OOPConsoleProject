@@ -11,15 +11,9 @@ namespace OOPConsoleProject.Scenes
         public static int MapNumber = 1;
         public Map field;
 
-        protected string[] mapData;
-        protected bool[,] map;
-
-
         public override void Render()
         {
             field.Print();
-
-            Game.Player.Print();
         }
 
 
@@ -41,6 +35,7 @@ namespace OOPConsoleProject.Scenes
 
         public override void Update()
         {
+
         }
 
         public override void Enter()
@@ -48,16 +43,11 @@ namespace OOPConsoleProject.Scenes
             MapFactory mapFact = new MapFactory();
 
             field = mapFact.Create(MapNumber);
-
-            
         }
 
         public override void Exit()
         {
-            if(field.Ismoving(ref MapNumber,out MapNumber))
-            {
-
-            }
+            field.Moving(ref MapNumber);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace OOPConsoleProject
         // 맵을 저장할 리스트를 선언한다.
         private static List<string[]> MapList = new List<string[]>();
         public static List<string[]> mapList { get => MapList; }
-
+        private int thismap; 
 
         // bool[,] 변수로 이동 가능 여부를 체크한다.
         public bool[,] map;
@@ -19,8 +19,10 @@ namespace OOPConsoleProject
         public List<int[]> movingPoint = new List<int[]>();
         public Player player = Game.Player;
 
+
         public Map(int MapNumber)
         {
+            thismap = MapNumber;
             // mapList에 맵이 생성이 안된 경우에 초기화를 진행한다.
             if (mapList.Count == 0)
             {
@@ -57,7 +59,7 @@ namespace OOPConsoleProject
             }
 
             // 만들어진 맵을 플레이어에게 전달한다.
-            SetMap(map);
+            SetMap();
         } 
 
 
@@ -103,6 +105,23 @@ namespace OOPConsoleProject
             // 맵을 출력하기 위해 현재의 커서를 0,0으로 둔다. 
             Console.SetCursorPosition(0, 0);
 
+            // 이동 지점들을 정리해두는 list를 선언한다.
+            List<Vector2> moveVec = new List<Vector2>();
+            // 해당 이동 지점의 목적지를 저장하는 list 
+            List<int> moveTo = new List<int>();
+
+            foreach (int[] move in movingPoint)
+            {
+                // 해당 맵에 존재하는 이동 지점일 경우
+                if (move[0] == thismap)
+                {
+                    // moveVec에 Vector2 형태로 이동 지점의 위치를 저장한다.
+                    moveVec.Add(new Vector2(move[1], move[2]));
+                    // moveTo에 목적지의 위치를 저장한다.
+                    moveTo.Add(move[3]);
+                }
+            }
+
             for (int y = 0; y < map.GetLength(0); y++)
             {
                 for (int x = 0; x < map.GetLength(1); x++)
@@ -110,7 +129,15 @@ namespace OOPConsoleProject
                     // 맵의 값이 true면 공백을 출력한다.
                     if (map[y,x] == true)
                     {
-                        Console.Write(' ');
+                        int to = moveVec.IndexOf(new Vector2(x, y));
+                        if ( to == -1)
+                        {
+                            Console.Write(' ');
+                        }
+                        else
+                        {
+                            Console.Write(moveTo[to]);
+                        }
                     }
                     // 맵의 값이 false면 벽으로 #을 출력한다.
                     else
@@ -124,14 +151,14 @@ namespace OOPConsoleProject
         }
 
         //플레이어의 맵을 현재 맵으로 세팅한다.
-        public void SetMap(bool[,] map)
+        public void SetMap()
         {
             player.map = map;
         }
 
         // 플레이어의 현재 위치가 다른 포인트로의 이동 지점인지 판단한다.
-        // 현재 맵 번호를 받고 다음 맵 번호를 전달한다.
-        public bool Ismoving(ref int MapNumber, out int SceneNum)
+        // 현재 맵 번호를 인자로 받는다.
+        public void Moving(ref int MapNumber)
         {
             foreach (int[] moving in movingPoint)
             {
@@ -145,21 +172,22 @@ namespace OOPConsoleProject
                         {
                             // 다시 이동 지점들의 좌표를 순회하여
                             // 이동할 맵 번호가 해당 맵이며
-                            // //
+                            // 해당 지점이 연결되어 있을 경우
                             if(moved[0] == moving[3] && moved[3] == moving[0])
                             {
+                                // 맵 번호를 해당 맵으로 세팅한다.
+                                // ref이므로 내부 값이 변하면 원래의 값도 영향을 준다
                                 MapNumber = moved[0];
+                                // 플레이어의 위치를 이동할 곳의 이동 지점 좌표로 설정한다.
                                 player.position = new Vector2(moved[1], moved[2]);
-                                SceneNum = MapNumber;
-                                return true;
+                                return;
                             }
                         }
+                        // 만약 연결된 지점을 찾지 못하면 에러를 발생시킨다.
                         Console.WriteLine("에러: 이동할 맵을 찾지 못했음");
                     }
                 }
             }
-            SceneNum = MapNumber;
-            return false;
         }
 
 
