@@ -49,7 +49,7 @@ namespace OOPConsoleProject.Scenes
         {
             Game.Player.Action(input);
             field.Moving(ref MapNumber);
-            if (random.Next(0, 12) < monsterRate)
+            if (random.Next(0, 100) < monsterRate)
             {
                 IsBattle = true;
                 monsterRate = 0;

@@ -125,8 +125,7 @@ namespace OOPConsoleProject.Scenes
             int rand = random.Next(0, 1);
 
             MonsterBuilder monsterBuilder = BuilderList[rand];
-            monsterBuilder.SetArt(monsterBuilder.Name)
-                          .SetLevel(MapNumber);
+            monsterBuilder.SetLevel(Map.levelList[MapNumber-1]);
 
             monster = monsterBuilder.Build();
 

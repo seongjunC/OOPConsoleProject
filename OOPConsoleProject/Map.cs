@@ -11,6 +11,9 @@ namespace OOPConsoleProject
         // 맵을 저장할 리스트를 선언한다.
         private static List<string[]> MapList = new List<string[]>();
         public static List<string[]> mapList { get => MapList; }
+
+        private static List<int> LevelList = new List<int>();
+        public static List<int> levelList { get => LevelList; }
         private int thismap; 
         
 
@@ -96,9 +99,14 @@ namespace OOPConsoleProject
                 "########"
             };
 
+
             MapList.Add(mapData_1);
             MapList.Add(mapData_2);
             MapList.Add(mapData_3);
+
+            LevelList.Add(1);
+            LevelList.Add(3);
+            LevelList.Add(6);
 
             // MapList에 있는 이동 지점들을 찾는다.
             int dataNum = 1;
