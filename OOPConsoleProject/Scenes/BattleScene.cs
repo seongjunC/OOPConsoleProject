@@ -23,11 +23,21 @@ namespace OOPConsoleProject.Scenes
             orangeMushroomBuilder
                 .SetName("주황 버섯")
                 .SetGold(100)
-                .SetEXP(100)
+                .SetEXP(15)
                 .SetStat(new Stat(50, 7, 7, 10, 7));
+
+            MonsterBuilder ribbonPigBuilder = new MonsterBuilder();
+            ribbonPigBuilder
+                .SetName("리본 돼지")
+                .SetGold(80)
+                .SetEXP(20)
+                .SetStat(new Stat(80, 6, 6, 8, 10));
+
+            
 
 
             BuilderList.Add(orangeMushroomBuilder);
+            BuilderList.Add(ribbonPigBuilder);
 
         }
 
@@ -122,12 +132,15 @@ namespace OOPConsoleProject.Scenes
             IsPlayerDead = false;
             IsEnemyDead = false;
 
-            int rand = random.Next(0, 1);
+            int rand = random.Next(0, MonsterBuilder.count);
+
 
             MonsterBuilder monsterBuilder = BuilderList[rand];
             monsterBuilder.SetLevel(Map.levelList[MapNumber-1]);
 
             monster = monsterBuilder.Build();
+
+            Util.ReadyPlayer();
 
             monNowHp = monster.Stat.Hp;
             playerNowHp = player.Stat.Hp;
@@ -152,7 +165,7 @@ namespace OOPConsoleProject.Scenes
         {
             if(crit)
                 {
-                Console.WriteLine("{0}의 공격! Criticlal!!, {1}의 데미지!, {2}번 공격했다! ", name, damage, repeat);
+                Console.WriteLine("{0}의 공격! 크리티컬!!, {1}의 데미지!, {2}번 공격했다! ", name, damage, repeat);
             }
                 else
             {

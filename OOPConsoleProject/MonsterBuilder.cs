@@ -13,10 +13,17 @@ namespace OOPConsoleProject
         private int level;
         private int gold;
         private int EXP;
+        private int Exp;
         private Stat Setstat;
         private Stat stat;
         private string[] art = new string[] { };
         private Monsters.MonsterArt monsterASCII = new Monsters.MonsterArt();
+        public static int count = 0;
+
+        public MonsterBuilder()
+        {
+            count++;
+        }
 
         public Monster Build()
         {
@@ -26,40 +33,41 @@ namespace OOPConsoleProject
 
         public MonsterBuilder SetName(string _name)
         {
-            this.Name = _name;
+            Name = _name;
             return this;
         }
 
         public MonsterBuilder SetLevel(int _level)
         {
-            this.level = _level;
-            this.stat = (Setstat * level);
+            level = _level;
+            stat = (Setstat * level);
+            EXP = (int)(Exp * (1+level*0.4));
             return this;
         }
         
         public MonsterBuilder SetGold(int _gold)
         {
-            this.gold = _gold;
+            gold = _gold;
             return this;
         }
 
         public MonsterBuilder SetEXP(int _Exp)
         {
-            this.EXP = _Exp;
+            Exp = _Exp;
             return this;
         }
 
         public MonsterBuilder SetStat(Stat _stat)
         {
-            this.Setstat = _stat;
+            Setstat = _stat;
             return this;
         }
 
         public MonsterBuilder SetArt(string monsterName) 
         {
-            try { this.art = monsterASCII.monsterDict[monsterName];
+            try { art = monsterASCII.monsterDict[monsterName];
             }
-            catch { this.art = new string[] { };
+            catch { art = new string[] { };
             }
             return this;
         }

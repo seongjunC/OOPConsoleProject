@@ -12,7 +12,7 @@ namespace OOPConsoleProject
         public static Random rand = new Random();
         public static int CalculateDamage(Stat _attackerStat, Stat _defenderStat, int RepeatNum, out bool IsCrit)
         {
-            int damage = (int)(_attackerStat.Atk - _defenderStat.Def * 0.5) * 3;
+            int damage = (int)(_attackerStat.Atk - _defenderStat.Def * 0.3) * 3;
             double criticalRate;
             double luckCrit = (_attackerStat.Luc - (_defenderStat.Luc * 0.4));
             double AgiCrit = (_attackerStat.Agi - (_defenderStat.Agi*0.4)) * 0.7;

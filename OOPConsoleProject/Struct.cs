@@ -55,12 +55,12 @@ namespace OOPConsoleProject
                     Console.WriteLine($"HP 스탯 {statPoint * 10} 증가");
                     break;
                 case ConsoleKey.D2:
-                    ATK += statPoint * 5;
-                    Console.WriteLine($"ATK 스탯 {statPoint * 5} 증가");
+                    ATK += statPoint * 2;
+                    Console.WriteLine($"ATK 스탯 {statPoint * 2} 증가");
                     break;
                 case ConsoleKey.D3:
-                    DEF += statPoint * 5;
-                    Console.WriteLine($"DEF 스탯 {statPoint} 증가");
+                    DEF += statPoint * 2;
+                    Console.WriteLine($"DEF 스탯 {statPoint * 2} 증가");
                     break;
                 case ConsoleKey.D4:
                     AGI += statPoint;

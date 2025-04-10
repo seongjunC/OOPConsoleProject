@@ -145,12 +145,19 @@ namespace OOPConsoleProject
                 Console.WriteLine("어떤 스탯을 올리시겠습니까?");
                 Console.WriteLine("스탯 올리기를 종료하시려면 6키를 눌러주세요.\n");
                 // stat 구조체에서 플레이어의 스탯을 보여준다.
+                Console.WriteLine("현재의 스탯 포인트 : {0}", statPoint);
                 stat.PrintStat();
-                Console.WriteLine("HP = 1, ATK = 2, DEF = 3, AGI = 4, LUC = 5");
+                Console.WriteLine("HP = 1번, ATK = 2번, DEF = 3번, AGI = 4번, LUC = 5번");
                 // 플레이어가 어떤 스탯을 올릴 지 선택한 결과를 저장한다.
                 ConsoleKey statName = Console.ReadKey(true).Key;
                 //  6번 키를 누르면 statPoint 사용을 중지한다.
                 if (statName == ConsoleKey.D6) break;
+                else if (!IsValid(statName))
+                {
+                    Console.WriteLine("유효하지 않은 입력입니다. 1 2 3 4 5 6 중에서 입력해 주세요.");
+                    Util.ReadyPlayer();
+                    continue;
+                }
 
                 Console.SetCursorPosition(0, 0);
                 Console.Clear();
@@ -166,7 +173,7 @@ namespace OOPConsoleProject
                      if(statPoint >= statAmount)
                      {
                         // Stat 구조체의 메서드인 StatUP을 실행한다.
-                        // 이후는 stat 구조체에서 실행
+                        // 이후는 stat 구조체에서 실행한다.
                         stat.StatUp(statAmount, statName);
                         statPoint -= statAmount;                        
                      }
@@ -177,6 +184,21 @@ namespace OOPConsoleProject
                 // 만약 숫자가 아닌 값을 입력했을 경우 오류 메시지 출력
                 else Console.WriteLine("유효하지 않은 입력입니다. 숫자만 입력해주세요.");
                 Util.ReadyPlayer();
+            }
+        }
+
+        public bool IsValid(ConsoleKey input)
+        {
+            switch (input)
+            {
+                case ConsoleKey.D1:
+                case ConsoleKey.D2:
+                case ConsoleKey.D3:
+                case ConsoleKey.D4:
+                case ConsoleKey.D5:
+                    return true;
+                default:
+                    return false;
             }
         }
 
@@ -209,6 +231,8 @@ namespace OOPConsoleProject
             }
 
         }
+
+
 
 
     }
