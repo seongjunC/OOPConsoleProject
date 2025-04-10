@@ -26,18 +26,31 @@ namespace OOPConsoleProject
         private int statPoint;
         private int statPerLevel;
 
+        private Inventory inventory;
+        public Inventory Inventory { get { return inventory; } }
+
+        private Equipment[] equipment;
+        public Equipment[] Equipment { get { return equipment; } }
+
+        private Item[] equipedItem;
+        public Item[] EquipedItem { get { return equipedItem; } }
+
         private Stat stat;
         public Stat Stat {  get { return stat; } }
 
         private Vector2 Position;
         public Vector2 position { get => Position; set => Position = value; }
 
-        private delegate void ExpManager();
-        event ExpManager LevelManager;
+        private delegate void Manager();
+        event Manager LevelManager;
+        event Manager InventoryManager;
+        //private delegate bool Manager2(Item item);
+        //event Manager2 EquipmentManager;
 
         public Player() {
             // 플레이어의 스탯의 초기 값 설정
             stat = new Stat(100, 10, 10, 5, 5);
+            inventory = new Inventory();
             // 초기 레벨은 1
             level = 1;
             // 추후 레벨업시 스탯을 올리기위해 필요한 포인트, 초기 값은 0 
@@ -53,10 +66,20 @@ namespace OOPConsoleProject
             // 플레이어의 위치를 Vector2 변수로 1,1로 초기 설정
             position = new Vector2(1, 1);
             BP = 20;
+            equipment = new Equipment[3];
+            equipedItem = new Item[3];
+            for(int i =0; i<3; i++)
+            {
+                equipedItem[i] = new Item();
+                equipment[i] = new Equipment(i);
+            }
+
             // event 객체에 level과 관련된 함수들을 체이닝
             LevelManager += LevelUp;
             LevelManager += LevelUpMessage;
             LevelManager += StatPointUse;
+            InventoryManager += InventoryChecker;
+            //EquipmentManager += EquipmentChecker;
         }
 
         public void Print()
@@ -82,6 +105,21 @@ namespace OOPConsoleProject
                 case ConsoleKey.A:
                     Move(key);
                     break;
+            }
+            if(IsValid(key, 9))
+            {
+                Console.Clear();
+                inventory.PrintItem((int) key);
+                Console.WriteLine("\n장착하기 : 1번, 버리기 : 2번, 나가기 : 3번");
+                bool isGood = true;
+                do
+                {
+                    ConsoleKey newKey = Console.ReadKey(true).Key;
+                    if (isGood = IsValid(newKey, 3))
+                    {
+                        inventory.ProcessKey(newKey, key);
+                    }
+                } while (!isGood);
             }
         }
         public void Move(ConsoleKey input)
@@ -186,7 +224,7 @@ namespace OOPConsoleProject
                 ConsoleKey statName = Console.ReadKey(true).Key;
                 //  6번 키를 누르면 statPoint 사용을 중지한다.
                 if (statName == ConsoleKey.D6) break;
-                else if (!IsValid(statName))
+                else if (!IsValid(statName,5))
                 {
                     Console.WriteLine("유효하지 않은 입력입니다. 1 2 3 4 5 6 중에서 입력해 주세요.");
                     Util.ReadyPlayer();
@@ -221,15 +259,16 @@ namespace OOPConsoleProject
             }
         }
 
-        public bool IsValid(ConsoleKey input)
+        public bool IsValid(ConsoleKey input, int to)
         {
+            ConsoleKey[] keys = new ConsoleKey[to];
+            for (int i = 1; i < to + 1; i++)
+            {
+                keys[i-1] = (ConsoleKey)i;
+            }
             switch (input)
             {
-                case ConsoleKey.D1:
-                case ConsoleKey.D2:
-                case ConsoleKey.D3:
-                case ConsoleKey.D4:
-                case ConsoleKey.D5:
+                case ConsoleKey key when keys.Contains(key):
                     return true;
                 default:
                     return false;
@@ -245,7 +284,81 @@ namespace OOPConsoleProject
             }
         }
 
+        public void AddInventory(Item item)
+        {
+            inventory.Add(item);
+            InventoryManager?.Invoke();
+        }
 
+        public void InventoryChecker()
+        {
+            if (inventory.Count >= 9)
+            {
+                bool isvalid = true;
+                Console.Clear();
+                while (isvalid)
+                {
+                    Console.WriteLine("인벤토리가 가득 찼습니다.");
+                    Console.WriteLine("버릴 아이템을 선택해주세요");
+                    Console.WriteLine("(버릴 아이템의 번호를 입력 해주세요) : ");
+                    ConsoleKey index = Console.ReadKey(true).Key;
+                    if (!(isvalid=IsValid(index, 9)))
+                    {
+                        Console.WriteLine("아이템의 번호를 다시 입력해주세요");
+                        Util.ReadyPlayer();
+                        continue;
+                    }
+                    Console.WriteLine("{0} 아이템을 버렸습니다.",
+                    inventory.TakeItem((int)index).name);
+                }
+            }
+        }
+        
+        public void Equip(Item item)
+        {
+            ReplaceEquip(item.region.equiptype, item);
+        }
+
+
+        public void ReplaceEquip(type T, Item item)
+        {
+            int i = (int)T;
+            if (Equipment[i].equiptype == type.none)
+            {
+                EquipedItem[i] = item;
+                Equipment[i] = item.region;
+            }
+            else
+            {
+                Console.WriteLine("착용하고 있던 아이템");
+                EquipedItem[i].PrintItem();
+
+                Console.WriteLine("\n선택한 아이템");
+                item.PrintItem();
+
+                Console.WriteLine("장비를 교체하시겠습니까?");
+                Console.WriteLine("1.Y 2.N");
+                bool isGood = false;
+                ConsoleKey replaceKey;
+                while (!isGood)
+                {
+                    replaceKey = Console.ReadKey(true).Key;
+                    isGood = IsValid(replaceKey, 2);
+                    if (isGood)
+                    {
+                        switch (replaceKey)
+                        {
+                            case (ConsoleKey)1:
+                                inventory.Add(EquipedItem[i]);
+                                EquipedItem[i] = item;
+                                break;
+                            case (ConsoleKey)2:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
 
 
 

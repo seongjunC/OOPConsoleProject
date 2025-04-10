@@ -185,6 +185,7 @@ namespace OOPConsoleProject
                 Console.WriteLine();
             }
             Console.WriteLine("\n플레이어의 남은 BP : {0}", player.bp);
+            player.Inventory.PrintItems();
             player.Print();
 
         }

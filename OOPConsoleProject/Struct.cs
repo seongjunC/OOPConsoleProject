@@ -84,6 +84,52 @@ namespace OOPConsoleProject
             return stat;
         }
 
+        public int this[int index]
+        {
+            get {
+                switch (index)
+                {
+                    case 0:
+                        return HP;
+                    case 1: 
+                        return ATK;
+                    case 2:
+                        return DEF;                    
+                    case 3:
+                        return AGI;
+                    case 4:
+                        return LUC;
+                    default:
+                        Console.WriteLine("잘못된 스탯 값을 요청하였음");
+                        return 0;
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        HP = value;
+                        break;
+                    case 1:
+                        ATK = value;
+                        break;
+                    case 2:
+                        DEF = value;
+                        break;
+                    case 3:
+                        AGI = value;
+                        break;
+                    case 4:
+                        DEF = value;
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 스탯 값을 요청하였음");
+                        break;
+                }
+            }
+        }
+
     }
 
     public struct Vector2
@@ -106,5 +152,79 @@ namespace OOPConsoleProject
             return !(a.x == b.x && a.y == b.y); 
         }
 
+    }
+    public enum type
+    {
+        Weapon = 1, Armor = 2, AccessoryAgi = 3, AccessoryLuc = 4, none =5
+    }
+
+    public struct Equipment
+    {
+
+        public Stat EquipStat;
+        public type equiptype;
+        public int value;
+        public string statName;
+        public Equipment(int i)
+        {
+            EquipStat = new Stat(0,0,0,0,0);
+            equiptype = type.none;
+            value = 0;
+            statName = "none";
+        }
+
+        public Equipment(type T, int value)
+        {
+            EquipStat = new Stat(0, 0, 0, 0, 0);
+            equiptype = T;
+            this.value = value;
+            switch (T)
+            {
+                case type.Weapon:
+                    EquipStat[1] = value;
+                    statName = "ATK";
+                    break;
+                case type.Armor:
+                    EquipStat[2] = value;
+                    statName = "DEF";
+                    break;
+                case type.AccessoryAgi:
+                    EquipStat[3] = value;
+                    statName = "AGI";
+                    break;
+                case type.AccessoryLuc:
+                    EquipStat[4] = value;
+                    statName = "LUC";
+                    break;
+                default:
+                    statName = null;
+                    break;
+            }
+        }
+
+        public Stat Equip()
+        {
+            return EquipStat;
+        }
+
+        public void Print()
+        {
+            Console.WriteLine("이 장비의 타입 : {0}", equiptype);
+            Console.WriteLine("이 장비의 능력치 {0} {1}", statName, this[(int)equiptype]);
+        }
+
+        public int this[int index]{
+            get
+            {
+                if( index >= 1 && index <=4)
+                {
+                    return EquipStat[index];
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

@@ -7,8 +7,6 @@ namespace OOPConsoleProject.Scenes
     {
         bool IsFirst;
         bool IsBattleEnd;
-        bool IsPlayerDead;
-        bool IsEnemyDead;
         Monster monster;
         List<MonsterBuilder> BuilderList = new List<MonsterBuilder>();
         int monNowHp;
@@ -105,7 +103,6 @@ namespace OOPConsoleProject.Scenes
             if (playerDamage >= monNowHp)
             {
                 IsBattleEnd = true;
-                IsEnemyDead = true;
                 monNowHp = 0;
                 PrintEachHp();
                 PrintAttckResult("플레이어", playerDamage, playerAttackRepeat, IsCrit);
@@ -128,7 +125,6 @@ namespace OOPConsoleProject.Scenes
             if (monsterDamage >= playerNowHp)
             {
                 IsBattleEnd = true;
-                IsPlayerDead = true;
                 playerNowHp = 0;
                 PrintEachHp();
                 PrintAttckResult(monster.Name, monsterDamage, monsterAttackRepeat,IsCrit);
@@ -162,8 +158,6 @@ namespace OOPConsoleProject.Scenes
         {
             IsFirst = true;
             IsBattleEnd = false;
-            IsPlayerDead = false;
-            IsEnemyDead = false;
             bool IsHere = true;
             MapNumber = MapScene.MapNumber;
 
