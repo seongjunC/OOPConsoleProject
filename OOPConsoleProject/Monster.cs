@@ -33,6 +33,5 @@ namespace OOPConsoleProject
             this.stat = _stat;
             this.art = art;
         }
-
     }
 }

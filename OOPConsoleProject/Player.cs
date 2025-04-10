@@ -11,6 +11,7 @@ namespace OOPConsoleProject
         public bool[,] map;
         private int level;
         public int Level { get { return level; } }
+        private int prevlevel;
 
         private int gold;
         public int Gold { get { return gold; } }
@@ -50,6 +51,7 @@ namespace OOPConsoleProject
             position = new Vector2(1, 1);
             // event 객체에 level과 관련된 함수들을 체이닝
             LevelManager += LevelUp;
+            LevelManager += LevelUpMessage;
             LevelManager += StatPointUse;
         }
 
@@ -86,6 +88,7 @@ namespace OOPConsoleProject
             EXP += expAmount;
             if (EXP >= ExpBar)
             {
+                prevlevel = Level;
                 LevelManager();
             }
         }
@@ -117,7 +120,7 @@ namespace OOPConsoleProject
                 // level이 올랐으므로 해당 양만큼 EXP에서 빼 준다.
                 EXP -= ExpBar;
                 // ExpBar의 경험치량을 지수함수 적으로 올려준다.
-                ExpBar += ((int)Math.Pow(3, Math.Sqrt(Level) / 2));
+                ExpBar += ((int)Math.Pow(3, Math.Sqrt(level) / 2));
                 // 재귀함수로 ExpBar보다 EXP가 적을때 까지 실행한다.
                 LevelUp();
             }
@@ -125,18 +128,22 @@ namespace OOPConsoleProject
             return;
         }
 
+        private void LevelUpMessage()
+        {
+            Console.WriteLine("{0} 레벨이 올랐습니다!!\n", Level - prevlevel);
+        }
+
 
         // StatPoint를 사용해서 스탯을 올린다.
         // 현재는 levelManager를 통해서 level이 오르면 자동 실행되지만
         // TODO : 옵션 메뉴를 만들어서 스탯창을 연다든지 설정을 통해 
         // level이 오를 때 자동으로 스탯 분배 창이 켜질 지를 선택하게 구현할 수 있다. 
-        private void StatPointUse() { 
+        private void StatPointUse() {
             // statPoint가 0보다 클 경우 (작으면 stat을 분배할 수 없으므로)
             while(statPoint > 0)
             {
-                Console.SetCursorPosition(0, map.GetLength(0) + 2);
                 Console.WriteLine("어떤 스탯을 올리시겠습니까?");
-                Console.WriteLine("스탯 올리기를 종료하시려면 6키를 눌러주세요.");
+                Console.WriteLine("스탯 올리기를 종료하시려면 6키를 눌러주세요.\n");
                 // stat 구조체에서 플레이어의 스탯을 보여준다.
                 stat.PrintStat();
                 Console.WriteLine("HP = 1, ATK = 2, DEF = 3, AGI = 4, LUC = 5");
@@ -145,6 +152,9 @@ namespace OOPConsoleProject
                 //  6번 키를 누르면 statPoint 사용을 중지한다.
                 if (statName == ConsoleKey.D6) break;
 
+                Console.SetCursorPosition(0, 0);
+                Console.Clear();
+                stat.PrintStat();
                 Console.WriteLine("스탯 포인트를 얼마나 올리시겠습니까?");
                 Console.WriteLine("현재의 스탯 포인트 : {0}", statPoint);
 
@@ -158,6 +168,7 @@ namespace OOPConsoleProject
                         // Stat 구조체의 메서드인 StatUP을 실행한다.
                         // 이후는 stat 구조체에서 실행
                         stat.StatUp(statAmount, statName);
+                        statPoint -= statAmount;                        
                      }
                      // 만약 스탯포인트가 입력받은 값보다 적을 경우 에러 메시지 출력
                      else Console.WriteLine("스탯 포인트를 초과하여 입력하였습니다. 다시 입력해주세요.");
@@ -165,6 +176,7 @@ namespace OOPConsoleProject
                 }
                 // 만약 숫자가 아닌 값을 입력했을 경우 오류 메시지 출력
                 else Console.WriteLine("유효하지 않은 입력입니다. 숫자만 입력해주세요.");
+                Util.ReadyPlayer();
             }
         }
 

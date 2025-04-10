@@ -13,13 +13,14 @@ namespace OOPConsoleProject
         private int level;
         private int gold;
         private int EXP;
+        private Stat Setstat;
         private Stat stat;
         private string[] art = new string[] { };
         private Monsters.MonsterArt monsterASCII = new Monsters.MonsterArt();
 
         public Monster Build()
         {
-            Monster monster = new Monster(Name, level, gold, EXP, stat, art);
+            Monster monster = new Monster(Name, level, gold, EXP, Setstat, art);
             return monster;
         }
 
@@ -32,7 +33,7 @@ namespace OOPConsoleProject
         public MonsterBuilder SetLevel(int _level)
         {
             this.level = _level;
-            this.stat = (stat * level);
+            this.stat = (Setstat * level);
             return this;
         }
         
@@ -50,7 +51,7 @@ namespace OOPConsoleProject
 
         public MonsterBuilder SetStat(Stat _stat)
         {
-            this.stat = _stat;
+            this.Setstat = _stat;
             return this;
         }
 

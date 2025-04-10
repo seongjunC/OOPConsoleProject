@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOPConsoleProject.Scenes
 {
@@ -27,27 +24,32 @@ namespace OOPConsoleProject.Scenes
                 .SetName("주황 버섯")
                 .SetGold(100)
                 .SetEXP(100)
-                .SetStat(new Stat(100, 7, 7, 10, 7));
+                .SetStat(new Stat(50, 7, 7, 10, 7));
 
 
-            BuilderList.Add( orangeMushroomBuilder );
+            BuilderList.Add(orangeMushroomBuilder);
 
         }
 
         // TODO : 몬스터 구현 
         public override void Render()
         {
-            Console.SetCursorPosition(0, 0);
-            foreach (string str in monster.Art)
+            //foreach (string str in monster.Art)
+            //{
+            //    Console.WriteLine(str);
+            //}
+            if (IsFirst)
             {
-                Console.WriteLine(str);
+                Console.WriteLine("{0}이 나타났다.", monster.Name);
+                Console.WriteLine("{0}의 레벨 : ", monster.Level);
+                Console.SetCursorPosition(0, 0);
+                PrintEachHp();
             }
-            Console.WriteLine("{0} / {1} : 몬스터의 체력", monNowHp, monster.Stat.Hp);
-            Console.WriteLine("{0} / {1} : 플레이어의 체력", playerNowHp, player.Stat.Hp);
         }
 
         public override void Input()
         {
+
             if (IsFirst)
             {
                 Util.ReadyPlayer();
@@ -59,40 +61,48 @@ namespace OOPConsoleProject.Scenes
 
         public override void Update()
         {
+            Console.SetCursorPosition(0, 0);
             int playerAttackRepeat = Util.CalculateRepeat(player.Stat, monster.Stat);
-            int monsterAttackRepeat = Util.CalculateRepeat(monster.Stat, monster.Stat);
-            int playerDamage = Util.CalculateDamage(player.Stat, monster.Stat , playerAttackRepeat);
-            int monsterDamage = Util.CalculateDamage(monster.Stat, player.Stat, monsterAttackRepeat);
+            int playerDamage = Util.CalculateDamage(player.Stat, monster.Stat, playerAttackRepeat, out bool IsCrit);
 
-            Console.WriteLine("player의 공격! {0}의 데미지!, {1}번 공격했다! ", playerDamage, playerAttackRepeat);
             if (playerDamage >= monNowHp)
             {
                 IsBattleEnd = true;
                 IsEnemyDead = true;
+                monNowHp = 0;
+                PrintEachHp();
+                PrintAttckResult("플레이어", playerDamage, playerAttackRepeat, IsCrit);
                 Console.WriteLine("플레이어의 공격이 몬스터를 잡았다!");
+                Util.ReadyPlayer();
                 player.GetGold(monster.Gold);
                 player.GetExp(monster.Exp);
-                Util.ReadyPlayer();
                 return;
             }
-            else 
-            {                 
+            else
+            {
                 monNowHp -= playerDamage;
-
+                PrintEachHp();
+                PrintAttckResult("플레이어", playerDamage, playerAttackRepeat, IsCrit);
             }
-            Console.WriteLine("{0}의 공격! {1}의 데미지!, {2}번 공격했다! ", monster.Name, monsterDamage, monsterAttackRepeat);
+            Util.ReadyPlayer();
+            int monsterAttackRepeat = Util.CalculateRepeat(monster.Stat, monster.Stat);
+            int monsterDamage = Util.CalculateDamage(monster.Stat, player.Stat, monsterAttackRepeat, out IsCrit);
             if (monsterDamage >= playerNowHp)
             {
                 IsBattleEnd = true;
                 IsPlayerDead = true;
-
+                playerNowHp = 0;
+                PrintEachHp();
+                PrintAttckResult(monster.Name, monsterDamage, monsterAttackRepeat,IsCrit);
                 Console.WriteLine("몬스터의 공격이 플레이어를 쓰러뜨렸다...");
                 Util.ReadyPlayer();
                 return;
             }
             else
-            {               
+            {
                 playerNowHp -= monsterDamage;
+                PrintEachHp();
+                PrintAttckResult(monster.Name, monsterDamage, monsterAttackRepeat, IsCrit);
             }
             Util.ReadyPlayer();
 
@@ -112,19 +122,43 @@ namespace OOPConsoleProject.Scenes
             IsPlayerDead = false;
             IsEnemyDead = false;
 
-            int rand = random.Next(0,1);
-            
+            int rand = random.Next(0, 1);
+
             MonsterBuilder monsterBuilder = BuilderList[rand];
             monsterBuilder.SetArt(monsterBuilder.Name)
                           .SetLevel(MapNumber);
+
             monster = monsterBuilder.Build();
+
             monNowHp = monster.Stat.Hp;
             playerNowHp = player.Stat.Hp;
+        }
+
+        public override void Exit()
+        {
         }
 
         public override void SceneDic()
         {
             Game.InsertDic("Battle", this);
+        }
+
+        public void PrintEachHp()
+        {
+            Util.PrintHp("플레이어", playerNowHp, player.Stat);
+            Util.PrintHp(monster.Name, monNowHp, monster.Stat);
+        }
+
+        public void PrintAttckResult(string name, int damage, int repeat, bool crit)
+        {
+            if(crit)
+                {
+                Console.WriteLine("{0}의 공격! Criticlal!!, {1}의 데미지!, {2}번 공격했다! ", name, damage, repeat);
+            }
+                else
+            {
+                Console.WriteLine("{0}의 공격! {1}의 데미지!, {2}번 공격했다! ", name, damage, repeat);
+            }
         }
     }
 }

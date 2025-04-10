@@ -33,11 +33,12 @@ namespace OOPConsoleProject
         //플레이어의 스탯을 보여준다.
         public void PrintStat()
         {
-            Console.WriteLine("HP  : {0}", Hp);
-            Console.WriteLine("ATK : {0}", Atk);
-            Console.WriteLine("Def : {0}", Def);
-            Console.WriteLine("AGI : {0}", Agi);
-            Console.WriteLine("LUC : {0}", Luc);
+            Console.WriteLine("현재의 스탯 상황");
+            Console.Write("HP  : {0}  ", Hp);
+            Console.Write("ATK : {0}  ", Atk);
+            Console.Write("Def : {0}  ", Def);
+            Console.Write("AGI : {0}  ", Agi);
+            Console.WriteLine("LUC : {0}\n", Luc);
         }
 
 
@@ -51,18 +52,23 @@ namespace OOPConsoleProject
             {
                 case ConsoleKey.D1:
                     HP += statPoint * 10;
+                    Console.WriteLine($"HP 스탯 {statPoint * 10} 증가");
                     break;
                 case ConsoleKey.D2:
                     ATK += statPoint * 5;
+                    Console.WriteLine($"ATK 스탯 {statPoint * 5} 증가");
                     break;
                 case ConsoleKey.D3:
                     DEF += statPoint * 5;
+                    Console.WriteLine($"DEF 스탯 {statPoint} 증가");
                     break;
                 case ConsoleKey.D4:
                     AGI += statPoint;
+                    Console.WriteLine($"AGI 스탯 {statPoint} 증가");
                     break;
                 case ConsoleKey.D5:
                     LUC += statPoint;
+                    Console.WriteLine($"LUC 스탯 {statPoint} 증가");
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다 올릴 스탯을 골라주세요");

@@ -10,12 +10,13 @@ namespace OOPConsoleProject
     public static class Util
     {
         public static Random rand = new Random();
-        public static int CalculateDamage(Stat _attackerStat, Stat _defenderStat, int RepeatNum)
+        public static int CalculateDamage(Stat _attackerStat, Stat _defenderStat, int RepeatNum, out bool IsCrit)
         {
             int damage = (int)(_attackerStat.Atk - _defenderStat.Def * 0.5) * 3;
             double criticalRate;
-            double luckCrit = (_attackerStat.Luc - (_defenderStat.Luc * 0.4)) * 0.7;
-            double AgiCrit = (_attackerStat.Agi - (_defenderStat.Agi*0.4)) * 0.3;
+            double luckCrit = (_attackerStat.Luc - (_defenderStat.Luc * 0.4));
+            double AgiCrit = (_attackerStat.Agi - (_defenderStat.Agi*0.4)) * 0.7;
+            IsCrit = false;
             
             if (luckCrit <= 0 || AgiCrit <= 0) { 
                 criticalRate = 0;
@@ -25,6 +26,7 @@ namespace OOPConsoleProject
             int critJudge = rand.Next(0, 100);
             if(criticalRate > critJudge)
             {
+                IsCrit = true;
                 damage *= 2;
             }
             damage *= RepeatNum;
@@ -35,7 +37,7 @@ namespace OOPConsoleProject
         
         public static int CalculateRepeat(Stat _attackerStat, Stat _defenderStat)
         {
-            double comboRate = (_attackerStat.Agi - (_defenderStat.Agi * 0.4)) * 0.3;
+            double comboRate = (_attackerStat.Agi - (_defenderStat.Agi * 0.4));
 
             int comboJudge = rand.Next(0, 100);
             int repeat = 1;
@@ -51,8 +53,16 @@ namespace OOPConsoleProject
 
         public static void ReadyPlayer()
         {
-            Console.WriteLine("아무키나 눌러 다음으로 진행합니다.");
+            Console.WriteLine("\n아무키나 눌러 다음으로 진행합니다.");
             Console.ReadKey(true);
+            Console.Clear();
+            Console.SetCursorPosition(0,0);
         }
+
+        public static void PrintHp(string name, int Hp, Stat stat)
+        {
+            Console.WriteLine("{0} / {1} : {2}의 체력", Hp, stat.Hp, name);
+        }
+
     }
 }
