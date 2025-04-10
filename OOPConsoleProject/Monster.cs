@@ -30,9 +30,18 @@ namespace OOPConsoleProject
         private int max;
         public int Max { get { return max; } }
 
+        private Item item;
+        public Item Item { get { return item; } }
+
+        private int itemRate;
+        public int ItemRate { get { return itemRate; } }
+
+        public Item _item = new Item();
+
         public Monster(string _name, int _level, int _gold, int _Exp, Stat _stat, 
-            string[] art, int _min = 0, int _max = 0)
+            string[] art, Item _item, int _min = 0, int _max = 0, int _itemRate = 0)
         {
+            if (_item == null) { _item = this._item; }
             this.Name = _name;
             this.level = _level;
             this.gold = _gold;
@@ -41,6 +50,8 @@ namespace OOPConsoleProject
             this.art = art;
             min = _min;
             max = _max;
+            item = _item;
+            itemRate = _itemRate;
         }
     }
 }

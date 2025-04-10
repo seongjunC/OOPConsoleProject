@@ -17,14 +17,18 @@ namespace OOPConsoleProject.Scenes
 
         public BattleScene()
         {
+            Item sword = new Item("검", 5, type.Weapon);
+
             MonsterBuilder orangeMushroomBuilder = new MonsterBuilder();
             orangeMushroomBuilder
                 .SetName("주황 버섯")
                 .SetGold(100)
                 .SetEXP(15)
                 .SetStat(new Stat(50, 7, 7, 10, 7))
-                .SetMap(1,2);
-                
+                .SetMap(1,2)
+                .SetItem(sword, 20);
+
+            Item ribbon = new Item("리본", 10, type.Armor);
 
             MonsterBuilder ribbonPigBuilder = new MonsterBuilder();
             ribbonPigBuilder
@@ -32,14 +36,18 @@ namespace OOPConsoleProject.Scenes
                 .SetGold(80)
                 .SetEXP(20)
                 .SetStat(new Stat(80, 6, 6, 8, 10))
-                .SetMap(2,3);
+                .SetMap(2,3)
+                .SetItem(ribbon, 10);
+
+            Item tail = new Item("늑대 꼬리", 10, type.AccessoryAgi );
 
             MonsterBuilder wolfBuilder = new MonsterBuilder();
             wolfBuilder
                 .SetName("늑대")
                 .SetGold(50)
                 .SetEXP(30)
-                .SetStat(new Stat(100, 10, 3, 12, 4));
+                .SetStat(new Stat(100, 10, 3, 12, 4))
+                .SetItem(tail, 5);
 
             MonsterBuilder slimeBuilder = new MonsterBuilder();
             slimeBuilder
@@ -48,6 +56,7 @@ namespace OOPConsoleProject.Scenes
                 .SetEXP(25)
                 .SetStat(new Stat(150, 10, 7, 15, 12))
                 .SetMap(2,3);
+
 
             MonsterBuilder bearBuilder = new MonsterBuilder();
             bearBuilder
@@ -111,6 +120,17 @@ namespace OOPConsoleProject.Scenes
                 player.GetGold(monster.Gold);
                 player.GetExp(monster.Exp);
                 player.UseBp(1);
+                if (Util.ItemDropCalculate(player.Stat, monster.ItemRate))
+                {
+                    Console.Clear();
+                    Console.WriteLine("몬스터에게 장비가 떨어졌다!");
+                    Console.WriteLine("습득하시겠습니까? (1:Y / else:N)");
+                    ConsoleKey choice = Console.ReadKey(true).Key;
+                    if ((int)choice == 49)
+                    {
+                        player.AddInventory(monster.Item);
+                    }
+                }
                 return;
             }
             else
@@ -210,5 +230,7 @@ namespace OOPConsoleProject.Scenes
                 Console.WriteLine("{0}의 공격! {1}의 데미지!, {2}번 공격했다! ", name, damage, repeat);
             }
         }
+
+
     }
 }

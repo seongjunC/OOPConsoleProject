@@ -16,6 +16,8 @@ namespace OOPConsoleProject
         private int Exp;
         private int min;
         private int max;
+        private Item item;
+        private int rate;
         public int Min { get { return min; } }
         public int Max { get { return max; } }
         private Stat Setstat;
@@ -31,7 +33,7 @@ namespace OOPConsoleProject
 
         public Monster Build()
         {
-            Monster monster = new Monster(Name, level, gold, EXP, Setstat, art, min, max);
+            Monster monster = new Monster(Name, level, gold, EXP, Setstat, art,item, min, max, rate);
             return monster;
         }
 
@@ -80,6 +82,13 @@ namespace OOPConsoleProject
         {
             min = _min;
             max = _max;
+            return this;
+        }
+
+        public MonsterBuilder SetItem(Item _item, int _rate)
+        {
+            item = _item;
+            rate = _rate;
             return this;
         }
 

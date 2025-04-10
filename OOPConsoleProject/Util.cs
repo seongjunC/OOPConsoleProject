@@ -50,6 +50,16 @@ namespace OOPConsoleProject
             return repeat;
 
         }
+        public static bool ItemDropCalculate(Stat playerStat, int rate)
+        {
+            rate *= (int)(1 + playerStat.Luc * 0.1); 
+            int itemJudge = rand.Next(0, 100);
+            if (itemJudge < rate)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public static void ReadyPlayer()
         {

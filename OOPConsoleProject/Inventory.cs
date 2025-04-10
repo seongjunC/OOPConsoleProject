@@ -11,16 +11,21 @@ namespace OOPConsoleProject
     {
         private int selectindex;
         List<Item> items;
-        Player player = Game.Player;
 
         public Inventory() { 
             items = new List<Item>();
         }
 
+        public void Add(Item item)
+        {
+            items.Add(item);
+            
+        }
+
         public Item TakeItem(int index)
         {
-            Item item = items[index];
-            items.RemoveAt(index);
+            Item item = items[index-49];
+            items.RemoveAt(index-49);
             return item;
         }
 
@@ -58,27 +63,32 @@ namespace OOPConsoleProject
             selectindex = 0;
             foreach (Item item in items)
             {
-                Console.WriteLine($"{selectindex + 1}. {item}");
+                Console.WriteLine($"{selectindex + 1}. {item.name}");
             }
         }
 
-        public void PrintItem(int index)
+        public bool PrintItem(ConsoleKey index)
         {
             Console.Clear();
-            items[index].PrintItem();
+            if (items.Count == 0) return false;
+            items[(int)index-49].PrintItem();
+            return true;
         }
 
         public void ProcessKey(ConsoleKey key, ConsoleKey index)
         {
-            if ((int)key == 1)
+            Player player = Game.Player;
+            if ((int)key == 49)
             {
-                player.Equip(items[(int)index]);
+                Console.Clear();
+                player.Equip(items[(int)index-49]);
+                TakeItem((int)index);
             }
-            else if((int)key == 2){
+            else if((int)key == 50){
                 TakeItem((int)index);
                 return;
             }
-            else if((int)key == 3)
+            else if((int)key == 51)
             {
                 return;
             }

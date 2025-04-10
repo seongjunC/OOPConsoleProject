@@ -50,7 +50,7 @@ namespace OOPConsoleProject
         public Player() {
             // 플레이어의 스탯의 초기 값 설정
             stat = new Stat(100, 10, 10, 5, 5);
-            inventory = new Inventory();
+            inventory = new Inventory();            
             // 초기 레벨은 1
             level = 1;
             // 추후 레벨업시 스탯을 올리기위해 필요한 포인트, 초기 값은 0 
@@ -108,8 +108,9 @@ namespace OOPConsoleProject
             }
             if(IsValid(key, 9))
             {
-                Console.Clear();
-                inventory.PrintItem((int) key);
+                Console.Clear();                
+                bool isIn = inventory.PrintItem(key);
+                if (!isIn) return;
                 Console.WriteLine("\n장착하기 : 1번, 버리기 : 2번, 나가기 : 3번");
                 bool isGood = true;
                 do
@@ -264,7 +265,7 @@ namespace OOPConsoleProject
             ConsoleKey[] keys = new ConsoleKey[to];
             for (int i = 1; i < to + 1; i++)
             {
-                keys[i-1] = (ConsoleKey)i;
+                keys[i-1] = (ConsoleKey)i+48;
             }
             switch (input)
             {
@@ -309,7 +310,7 @@ namespace OOPConsoleProject
                         continue;
                     }
                     Console.WriteLine("{0} 아이템을 버렸습니다.",
-                    inventory.TakeItem((int)index).name);
+                    inventory.TakeItem((int)index-48).name);
                 }
             }
         }
@@ -322,7 +323,7 @@ namespace OOPConsoleProject
 
         public void ReplaceEquip(type T, Item item)
         {
-            int i = (int)T;
+            int i = (int)T-1;
             if (Equipment[i].equiptype == type.none)
             {
                 EquipedItem[i] = item;
@@ -348,11 +349,11 @@ namespace OOPConsoleProject
                     {
                         switch (replaceKey)
                         {
-                            case (ConsoleKey)1:
+                            case (ConsoleKey)49:
                                 inventory.Add(EquipedItem[i]);
                                 EquipedItem[i] = item;
                                 break;
-                            case (ConsoleKey)2:
+                            case (ConsoleKey)50:
                                 break;
                         }
                     }

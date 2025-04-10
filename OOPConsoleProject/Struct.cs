@@ -155,7 +155,7 @@ namespace OOPConsoleProject
     }
     public enum type
     {
-        Weapon = 1, Armor = 2, AccessoryAgi = 3, AccessoryLuc = 4, none =5
+        Weapon = 1, Armor = 2, AccessoryAgi = 3, AccessoryLuc = 4, none = 5
     }
 
     public struct Equipment
