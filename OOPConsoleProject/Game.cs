@@ -84,6 +84,14 @@ namespace OOPConsoleProject
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
+            Console.WriteLine("BP가 0이 되었습니다....");
+            Console.WriteLine("게임 오버......");
+
+            Console.WriteLine("플레이어의 레벨 : {0}", player.Level);
+            Console.Write("플레이어의 스탯 : ");
+            player.Stat.PrintStat();
+
+            Console.WriteLine("게임을 종료합니다.");
         }
     }
 }

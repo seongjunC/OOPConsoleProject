@@ -113,6 +113,7 @@ namespace OOPConsoleProject.Scenes
                 Util.ReadyPlayer();
                 player.GetGold(monster.Gold);
                 player.GetExp(monster.Exp);
+                player.UseBp(1);
                 return;
             }
             else
@@ -133,6 +134,7 @@ namespace OOPConsoleProject.Scenes
                 PrintAttckResult(monster.Name, monsterDamage, monsterAttackRepeat,IsCrit);
                 Console.WriteLine("몬스터의 공격이 플레이어를 쓰러뜨렸다...");
                 Util.ReadyPlayer();
+                player.UseBp(3);
                 return;
             }
             else
@@ -148,6 +150,10 @@ namespace OOPConsoleProject.Scenes
         {
             if (IsBattleEnd)
             {
+                if(player.bp == 0)
+                {
+                    Game.gameOver = true;
+                }
                 Game.ChangeScene("map");
             }
         }
@@ -185,6 +191,7 @@ namespace OOPConsoleProject.Scenes
 
         public override void Exit()
         {
+
         }
 
         public override void SceneDic()

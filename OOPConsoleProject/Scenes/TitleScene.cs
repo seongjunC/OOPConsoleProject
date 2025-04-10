@@ -17,6 +17,7 @@ namespace OOPConsoleProject.Scenes
             Console.WriteLine("************************");
             Console.WriteLine("\n\n    아무키나 눌러 게임 시작하기     ");
             Console.WriteLine("");
+            Console.WriteLine("방향키를 눌러 움직일 수 있습니다.");
         }
 
         public override void Input()

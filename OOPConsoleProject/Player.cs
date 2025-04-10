@@ -16,6 +16,9 @@ namespace OOPConsoleProject
         private int gold;
         public int Gold { get { return gold; } }
 
+        private int BP;
+        public int bp { get { return BP; } }
+
         private int EXP;
         public int Exp { get => EXP; }
 
@@ -49,6 +52,7 @@ namespace OOPConsoleProject
             gold = 0;
             // 플레이어의 위치를 Vector2 변수로 1,1로 초기 설정
             position = new Vector2(1, 1);
+            BP = 20;
             // event 객체에 level과 관련된 함수들을 체이닝
             LevelManager += LevelUp;
             LevelManager += LevelUpMessage;
@@ -79,6 +83,36 @@ namespace OOPConsoleProject
                     Move(key);
                     break;
             }
+        }
+        public void Move(ConsoleKey input)
+        {
+            Vector2 targetPos = Position;
+
+            switch (input)
+            {
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.W:
+                    targetPos.y--;
+                    break;
+                case ConsoleKey.DownArrow:
+                case ConsoleKey.S:
+                    targetPos.y++;
+                    break;
+                case ConsoleKey.LeftArrow:
+                case ConsoleKey.A:
+                    targetPos.x--;
+                    break;
+                case ConsoleKey.RightArrow:
+                case ConsoleKey.D:
+                    targetPos.x++;
+                    break;
+            }
+
+            if (map[targetPos.y, targetPos.x] == true)
+            {
+                position = targetPos;
+            }
+
         }
 
         // Exp를 얻을 때 실행할 함수
@@ -202,35 +236,16 @@ namespace OOPConsoleProject
             }
         }
 
-        public void Move(ConsoleKey input)
+        public void UseBp(int amount)
         {
-            Vector2 targetPos = Position;
-
-            switch (input) {
-                case ConsoleKey.UpArrow:
-                case ConsoleKey.W:
-                    targetPos.y--;
-                    break;
-                case ConsoleKey.DownArrow:
-                case ConsoleKey.S:
-                    targetPos.y++;
-                    break;
-                case ConsoleKey.LeftArrow:
-                case ConsoleKey.A:
-                    targetPos.x--;
-                    break;
-                case ConsoleKey.RightArrow:
-                case ConsoleKey.D:
-                    targetPos.x++;
-                    break;
-            }
-
-            if (map[targetPos.y, targetPos.x] == true)
+            BP -= amount;
+            if(BP <= 0)
             {
-                position = targetPos;
+                BP = 0;
             }
-
         }
+
+
 
 
 
