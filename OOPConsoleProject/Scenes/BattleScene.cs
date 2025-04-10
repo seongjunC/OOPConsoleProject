@@ -15,7 +15,7 @@ namespace OOPConsoleProject.Scenes
         int playerNowHp;
         Player player = Game.Player;
         Random random = new Random();
-        int MapNumber = MapScene.MapNumber;
+        int MapNumber;
 
         public BattleScene()
         {
@@ -33,7 +33,8 @@ namespace OOPConsoleProject.Scenes
                 .SetName("리본 돼지")
                 .SetGold(80)
                 .SetEXP(20)
-                .SetStat(new Stat(80, 6, 6, 8, 10));
+                .SetStat(new Stat(80, 6, 6, 8, 10))
+                .SetMap(2,3);
 
             MonsterBuilder wolfBuilder = new MonsterBuilder();
             wolfBuilder
@@ -41,14 +42,30 @@ namespace OOPConsoleProject.Scenes
                 .SetGold(50)
                 .SetEXP(30)
                 .SetStat(new Stat(100, 10, 3, 12, 4));
-            
-            MonsterBuilder 
+
+            MonsterBuilder slimeBuilder = new MonsterBuilder();
+            slimeBuilder
+                .SetName("슬라임")
+                .SetGold(120)
+                .SetEXP(25)
+                .SetStat(new Stat(150, 10, 7, 15, 12))
+                .SetMap(2,3);
+
+            MonsterBuilder bearBuilder = new MonsterBuilder();
+            bearBuilder
+                .SetName("곰")
+                .SetGold(200)
+                .SetEXP(50)
+                .SetStat(new Stat(220, 15, 10, 20, 5))
+                .SetMap(3, 3);
+
 
 
             BuilderList.Add(orangeMushroomBuilder);
             BuilderList.Add(ribbonPigBuilder);
             BuilderList.Add(wolfBuilder);
-
+            BuilderList.Add(slimeBuilder);
+            BuilderList.Add(bearBuilder);
         }
 
         // TODO : 몬스터 구현 
@@ -142,14 +159,14 @@ namespace OOPConsoleProject.Scenes
             IsPlayerDead = false;
             IsEnemyDead = false;
             bool IsHere = true;
+            MapNumber = MapScene.MapNumber;
 
             while (IsHere)
             {
                 int rand = random.Next(0, MonsterBuilder.count);
-
-                
                 MonsterBuilder monsterBuilder = BuilderList[rand];
-                if (monsterBuilder.Max == 0 || MapNumber < monsterBuilder.Max && monsterBuilder.Min < MapNumber )
+
+                if (monsterBuilder.Max == 0 || MapNumber <= monsterBuilder.Max && monsterBuilder.Min <= MapNumber )
                 {
                     monsterBuilder.SetLevel(Map.levelList[MapNumber - 1]);
 
