@@ -24,7 +24,9 @@ namespace OOPConsoleProject.Scenes
                 .SetName("주황 버섯")
                 .SetGold(100)
                 .SetEXP(15)
-                .SetStat(new Stat(50, 7, 7, 10, 7));
+                .SetStat(new Stat(50, 7, 7, 10, 7))
+                .SetMap(1,2);
+                
 
             MonsterBuilder ribbonPigBuilder = new MonsterBuilder();
             ribbonPigBuilder
@@ -33,11 +35,19 @@ namespace OOPConsoleProject.Scenes
                 .SetEXP(20)
                 .SetStat(new Stat(80, 6, 6, 8, 10));
 
+            MonsterBuilder wolfBuilder = new MonsterBuilder();
+            wolfBuilder
+                .SetName("늑대")
+                .SetGold(50)
+                .SetEXP(30)
+                .SetStat(new Stat(100, 10, 3, 12, 4));
             
+            MonsterBuilder 
 
 
             BuilderList.Add(orangeMushroomBuilder);
             BuilderList.Add(ribbonPigBuilder);
+            BuilderList.Add(wolfBuilder);
 
         }
 
@@ -131,14 +141,24 @@ namespace OOPConsoleProject.Scenes
             IsBattleEnd = false;
             IsPlayerDead = false;
             IsEnemyDead = false;
+            bool IsHere = true;
 
-            int rand = random.Next(0, MonsterBuilder.count);
+            while (IsHere)
+            {
+                int rand = random.Next(0, MonsterBuilder.count);
+
+                
+                MonsterBuilder monsterBuilder = BuilderList[rand];
+                if (monsterBuilder.Max == 0 || MapNumber < monsterBuilder.Max && monsterBuilder.Min < MapNumber )
+                {
+                    monsterBuilder.SetLevel(Map.levelList[MapNumber - 1]);
+
+                    monster = monsterBuilder.Build();
+                    IsHere = false;
+                }
+            }
 
 
-            MonsterBuilder monsterBuilder = BuilderList[rand];
-            monsterBuilder.SetLevel(Map.levelList[MapNumber-1]);
-
-            monster = monsterBuilder.Build();
 
             Util.ReadyPlayer();
 

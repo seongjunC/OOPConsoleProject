@@ -24,7 +24,14 @@ namespace OOPConsoleProject
         private Stat stat;
         public Stat Stat { get { return stat; } }
 
-        public Monster(string _name, int _level, int _gold, int _Exp, Stat _stat, string[] art)
+        private int min;
+        public int Min { get { return min; } }
+
+        private int max;
+        public int Max { get { return max; } }
+
+        public Monster(string _name, int _level, int _gold, int _Exp, Stat _stat, 
+            string[] art, int _min = 0, int _max = 0)
         {
             this.Name = _name;
             this.level = _level;
@@ -32,6 +39,8 @@ namespace OOPConsoleProject
             this.EXP = _Exp;
             this.stat = _stat;
             this.art = art;
+            min = _min;
+            max = _max;
         }
     }
 }
